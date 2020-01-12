@@ -30,7 +30,7 @@ public class Chat {
     factory.setPassword(pass); // Alterar
     
     
-    // factory.setHost("54.87.18.50"); // Alterar
+    // factory.setHost("52.90.219.23"); // Alterar
     // factory.setUsername("admin"); // Alterar
     // factory.setPassword("admin"); // Alterar
     factory.setVirtualHost("/");
@@ -51,6 +51,45 @@ public class Chat {
     // };
     //                   //(queue-name, autoAck, consumer);    
     // channel.basicConsume(QUEUE_NAME, true,    consumer);
+    
+    
+    
+    
+    
+    
+    //AQUI
+    
+    // channel.queueDeclare(QUEUE_NAME, false,   false,     false,       null);
+    
+    // String message = "";
+    
+    // while(true){
+    //   System.out.print("@"+user+":");
+    //   message = ler.nextLine();
+      
+    //   channel.basicPublish("",       QUEUE_NAME, null,  message.getBytes("UTF-8"));
+    // }
+    
+    
+    
+    
+    
+    channel.queueDeclare(QUEUE_NAME, false,   false,     false,       null);
+    System.out.println(" [*] Esperando recebimento de mensagens...");
+
+    Consumer consumer = new DefaultConsumer(channel) {
+      public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body)           throws IOException {
+        String message1 = new String(body, "UTF-8");
+        System.out.println("@alguem: '" + message1 + "'");
+
+                        //(deliveryTag,               multiple);
+        //channel.basicAck(envelope.getDeliveryTag(), false);
+      }
+    };
+                      //(queue-name, autoAck, consumer);    
+    channel.basicConsume(QUEUE_NAME, true,    consumer);
+    
+    
     channel.queueDeclare(QUEUE_NAME, false,   false,     false,       null);
     
     String message = "";
@@ -61,6 +100,22 @@ public class Chat {
       
       channel.basicPublish("",       QUEUE_NAME, null,  message.getBytes("UTF-8"));
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
                     //  (exchange, routingKey, props, message-body             ); 
